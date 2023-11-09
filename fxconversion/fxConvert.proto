@@ -1,0 +1,11 @@
+syntax = "proto3";
+package fxconversion;
+
+message ConversionRequest {
+    uint32 tenantId = 1;
+    uint32 bankId = 2;
+    string baseCurrency = 3;
+    string targetCurrency = 4;
+    string tier = 5;
+    uint32 amount = 6;
+}
