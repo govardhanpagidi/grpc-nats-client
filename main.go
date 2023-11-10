@@ -21,7 +21,7 @@ func main() {
 	url := viper.GetString("nats:url")
 	if url == "" {
 		url = "nats://localhost:4222"
-		fmt.Println("No value found for URL: using ", url)
+		fmt.Println("No value found for nats ur, so using ", url)
 	}
 
 	// Connect to NATS server
