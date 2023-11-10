@@ -35,11 +35,11 @@ func main() {
 	subject := "FX_DETERMINATION"
 
 	yourMessage := &pb.ConversionRequest{
-		TenantID:       123,
-		BankID:         123,
-		BaseCurrency:   "USD",
-		TargetCurrency: "GBP",
-		Tier:           "1",
+		TenantID:       12345,
+		BankID:         123456,
+		BaseCurrency:   "GBP",
+		TargetCurrency: "USD",
+		Tier:           "2",
 		Amount:         1000,
 	}
 
@@ -55,4 +55,26 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println("Published gRPC message to NATS subject:", subject)
+
+	// This code is optional and only needed when you want to listen to a response
+
+	_, err = nc.Subscribe("FX_CONVERTED", func(msg *nats.Msg) {
+		fmt.Printf("Received a message: %s\n", string(msg.Data))
+
+		var response pb.ConversionResponse
+		err := proto.Unmarshal(msg.Data, &response)
+		if err != nil {
+			log.Printf("Error unmarshalling gRPC message: %v\n", err)
+			return
+		}
+
+		fmt.Printf("Received a message: %v\n", response)
+
+	})
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	select {}
 }

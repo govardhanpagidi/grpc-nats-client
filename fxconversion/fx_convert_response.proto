@@ -1,0 +1,10 @@
+syntax = "proto3";
+package fxconversion;
+message ConversionResponse {
+    double amount = 1;
+    double convertedAmount = 2;
+    string baseCurrency = 3;
+    string targetCurrency = 4;
+    int64 initiatedOn = 5;
+    double rate = 6;
+}
