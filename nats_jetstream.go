@@ -7,4 +7,5 @@ type ConversionReq struct {
 	TargetCurrency string  `protobuf:"bytes,4,opt,name=targetCurrency" json:"targetCurrency,omitempty"`
 	Tier           string  `protobuf:"bytes,5,opt,name=tier" json:"tier,omitempty"`
 	Amount         float64 `protobuf:"fixed64,6,opt,name=amount" json:"amount,omitempty"`
+	RequestedOn    string  `protobuf:"bytes,7,opt,name=requestedOn" json:"requestedOn,omitempty"`
 }
