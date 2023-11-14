@@ -1,4 +1,4 @@
-package fxconversion
+package proto
 
 import "github.com/golang/protobuf/proto"
 
