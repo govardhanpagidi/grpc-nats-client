@@ -2,3 +2,4 @@ nats:
   url: nats://localhost:4222
 test:
   messagesPerSecond: 2
+  duration: 10 # seconds

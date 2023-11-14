@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/viper"
 	"log"
 	"math/rand"
+	"os"
 	"strconv"
 	"time"
 )
@@ -52,7 +53,18 @@ func main() {
 		log.Fatal(err)
 	}
 
-	select {}
+	duration := viper.GetString("test.duration")
+	if duration == "" {
+		duration = "1"
+		fmt.Println("No value found for test:duration, so using ", duration)
+	}
+	testDuration, err := strconv.Atoi(duration)
+	ticker := time.NewTicker(time.Second * time.Duration(testDuration))
+
+	select {
+	case <-ticker.C:
+		os.Exit(0)
+	}
 }
 
 func sendMessageToNatsJetStream(nc *nats.Conn, messagesPerSecond int) error {
