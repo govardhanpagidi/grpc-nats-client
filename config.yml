@@ -1,5 +1,5 @@
 nats:
   url: nats://localhost:4222
 test:
-  messagesPerSecond: 2
+  messagesPerSecond: 1
   duration: 10 # seconds

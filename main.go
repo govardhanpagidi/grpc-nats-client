@@ -43,7 +43,7 @@ func main() {
 	// Connect to NATS server
 	nc, err := nats.Connect(url)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("nats error:%s , \n URL: %s", url, err)
 	}
 	defer nc.Close()
 
@@ -135,6 +135,21 @@ func publishMessage(js nats.JetStreamContext, subject string, publishCount int) 
 	fmt.Printf("Published: msg: %d with %s \n", publishCount, string(msgByteArray))
 }
 
+func randomFloat() float64 {
+	rand.Seed(time.Now().UnixNano())
+
+	// Define the range for the random float (e.g., between 1.0 and 10.0)
+	minVal := 1.0
+	maxVal := 100000.0
+
+	// Generate a random float within the specified range
+	return roundToTwoDecimalPlaces(minVal + rand.Float64()*(maxVal-minVal))
+}
+
+func roundToTwoDecimalPlaces(num float64) float64 {
+	return float64(int(num*100)) / 100
+}
+
 func sendMessageToNats(nc *nats.Conn, subject string) error {
 	yourMessage := &pb.ConversionRequest{
 		TenantID:       12347,
@@ -176,19 +191,4 @@ func sendMessageToNats(nc *nats.Conn, subject string) error {
 	}
 
 	select {}
-}
-
-func randomFloat() float64 {
-	rand.Seed(time.Now().UnixNano())
-
-	// Define the range for the random float (e.g., between 1.0 and 10.0)
-	minVal := 1.0
-	maxVal := 100000.0
-
-	// Generate a random float within the specified range
-	return roundToTwoDecimalPlaces(minVal + rand.Float64()*(maxVal-minVal))
-}
-
-func roundToTwoDecimalPlaces(num float64) float64 {
-	return float64(int(num*100)) / 100
 }
